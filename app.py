@@ -53,10 +53,13 @@ class Venue(db.Model):
     city = db.Column(db.String(120))
     state = db.Column(db.String(120))
     phone = db.Column(db.String(120))
-    image_link = db.Column(db.String(500))
+    website = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
-    seeking_artist = db.Column(db.Boolean)
-    seeking_artist_request = db.Column(db.String(500))
+    seeking_talent = db.Column(db.Boolean)
+    seeking_description = db.Column(db.String(500))
+    image_link = db.Column(db.String(500))
+    # Get num_upcoming_shows through query with Shows table
+    # Get past_whos through query with Shows table
 
     shows = db.relationship('Show', backref='Venue')
     genres = db.relationship('Genre', secondary=venue_to_genre_assocations, backref=db.backref('venues', lazy=True))
@@ -75,6 +78,8 @@ class Artist(db.Model):
     facebook_link = db.Column(db.String(120))
     seeking_venue = db.Column(db.Boolean)
     seeking_venue_request = db.Column(db.String(500))
+    # Get num_upcoming_shows through query with Shows table
+    # Get past_whos through query with Shows table
 
     shows = db.relationship('Show', backref='Artist')
     genres = db.relationship('Genre', secondary=artist_to_genre_assocations, backref=db.backref('artists', lazy=True))
