@@ -41,7 +41,7 @@ venue_to_genre_assocations = db.Table('venue_to_genre_assocations',
 artist_to_genre_assocations = db.Table('artist_to_genre_assocations',
     db.Column('artist_id', db.Integer, db.ForeignKey('Artist.id'), primary_key=True),
     db.Column('genre_id', db.Integer, db.ForeignKey('Genre.id'), primary_key=True)
-)
+) 
 
 class Venue(db.Model):
     __tablename__ = 'Venue'
@@ -58,7 +58,7 @@ class Venue(db.Model):
     seeking_artist_request = db.Column(db.String(500))
 
     shows = db.relationship('Show', backref='Venue')
-    genres = db.relationship('Genre', secondary=venue_to_genre_assocations, backref=db.backref('Venue', lazy=True))
+    genres = db.relationship('Genre', secondary=venue_to_genre_assocations, backref=db.backref('venues', lazy=True))
     
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
@@ -76,7 +76,7 @@ class Artist(db.Model):
     seeking_venue_request = db.Column(db.String(500))
 
     shows = db.relationship('Show', backref='Artist')
-    genres = db.relationship('Genre', secondary=artist_to_genre_assocations, backref=db.backref('Artist', lazy=True))
+    genres = db.relationship('Genre', secondary=artist_to_genre_assocations, backref=db.backref('artists', lazy=True))
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
