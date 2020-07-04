@@ -15,7 +15,7 @@ from flask_wtf import Form
 from forms import *
 
 #----------------------------------------------------------------------------#
-# App Config.
+# App Config
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
@@ -27,7 +27,7 @@ migrate = Migrate(app, db)
 # ✅ TODO: connect to a local postgresql database
 
 #----------------------------------------------------------------------------#
-# Models.
+# Models
 #
 #   Whenever this is updated, in the command line, run:
 #     flask db migrate
@@ -104,7 +104,7 @@ class Genre(db.Model):
     name = db.Column(db.String(120), nullable=False, unique=True)
 
 #----------------------------------------------------------------------------#
-# Filters.
+# Filters
 #----------------------------------------------------------------------------#
 
 def format_datetime(value, format='medium'):
@@ -118,16 +118,16 @@ def format_datetime(value, format='medium'):
 app.jinja_env.filters['datetime'] = format_datetime
 
 #----------------------------------------------------------------------------#
-# Controllers.
+# Controllers
 #----------------------------------------------------------------------------#
 
 @app.route('/')
 def index():
   return render_template('pages/home.html')
 
-
+#--------------------------------------#
 #  Venues
-#  ----------------------------------------------------------------
+#--------------------------------------#
 
 @app.route('/venues')
 def venues():
@@ -255,8 +255,9 @@ def show_venue(venue_id):
   data = list(filter(lambda d: d['id'] == venue_id, [data1, data2, data3]))[0]
   return render_template('pages/show_venue.html', venue=data)
 
+#--------------------------------------#
 #  Create Venue
-#  ----------------------------------------------------------------
+#--------------------------------------#
 
 @app.route('/venues/create', methods=['GET'])
 def create_venue_form():
@@ -275,6 +276,10 @@ def create_venue_submission():
   # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
   return render_template('pages/home.html')
 
+#--------------------------------------#
+#  Delete Venue
+#--------------------------------------#
+
 @app.route('/venues/<venue_id>', methods=['DELETE'])
 def delete_venue(venue_id):
   # TODO: Complete this endpoint for taking a venue_id, and using
@@ -284,8 +289,10 @@ def delete_venue(venue_id):
   # clicking that button delete it from the db then redirect the user to the homepage
   return None
 
+#--------------------------------------#
 #  Artists
-#  ----------------------------------------------------------------
+#--------------------------------------#
+
 @app.route('/artists')
 def artists():
   # TODO: replace with real data returned from querying the database
@@ -394,8 +401,10 @@ def show_artist(artist_id):
   data = list(filter(lambda d: d['id'] == artist_id, [data1, data2, data3]))[0]
   return render_template('pages/show_artist.html', artist=data)
 
-#  Update
-#  ----------------------------------------------------------------
+#--------------------------------------#
+#  Edit Artist
+#--------------------------------------#
+
 @app.route('/artists/<int:artist_id>/edit', methods=['GET'])
 def edit_artist(artist_id):
   form = ArtistForm()
@@ -421,6 +430,10 @@ def edit_artist_submission(artist_id):
   # artist record with ID <artist_id> using the new attributes
 
   return redirect(url_for('show_artist', artist_id=artist_id))
+
+#--------------------------------------#
+#  Edit Venue
+#--------------------------------------#
 
 @app.route('/venues/<int:venue_id>/edit', methods=['GET'])
 def edit_venue(venue_id):
@@ -448,8 +461,9 @@ def edit_venue_submission(venue_id):
   # venue record with ID <venue_id> using the new attributes
   return redirect(url_for('show_venue', venue_id=venue_id))
 
+#--------------------------------------#
 #  Create Artist
-#  ----------------------------------------------------------------
+#--------------------------------------#
 
 @app.route('/artists/create', methods=['GET'])
 def create_artist_form():
@@ -459,7 +473,7 @@ def create_artist_form():
 @app.route('/artists/create', methods=['POST'])
 def create_artist_submission():
   # called upon submitting the new artist listing form
-  # TODO: insert form data as a new Venue record in the db, instead
+  # TODO: insert form data as a new Artist record in the db, instead
   # TODO: modify data to be the data object returned from db insertion
 
   # on successful db insert, flash success
@@ -468,9 +482,9 @@ def create_artist_submission():
   # e.g., flash('An error occurred. Artist ' + data.name + ' could not be listed.')
   return render_template('pages/home.html')
 
-
+#--------------------------------------#
 #  Shows
-#  ----------------------------------------------------------------
+#--------------------------------------#
 
 @app.route('/shows')
 def shows():
@@ -515,6 +529,10 @@ def shows():
   }]
   return render_template('pages/shows.html', shows=data)
 
+#--------------------------------------#
+#  Create Show
+#--------------------------------------#
+
 @app.route('/shows/create')
 def create_shows():
   # renders form. do not touch.
@@ -533,6 +551,10 @@ def create_show_submission():
   # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
   return render_template('pages/home.html')
 
+#--------------------------------------#
+#  Error handling
+#--------------------------------------#
+
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('errors/404.html'), 404
@@ -540,7 +562,6 @@ def not_found_error(error):
 @app.errorhandler(500)
 def server_error(error):
     return render_template('errors/500.html'), 500
-
 
 if not app.debug:
     file_handler = FileHandler('error.log')
@@ -553,7 +574,7 @@ if not app.debug:
     app.logger.info('errors')
 
 #----------------------------------------------------------------------------#
-# Launch.
+# Launch
 #----------------------------------------------------------------------------#
 
 # Default port:
