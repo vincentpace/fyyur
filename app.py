@@ -13,6 +13,7 @@ import logging
 from logging import Formatter, FileHandler
 from flask_wtf import Form
 from forms import *
+
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -23,7 +24,7 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# TODO: connect to a local postgresql database
+# ✅ TODO: connect to a local postgresql database
 
 #----------------------------------------------------------------------------#
 # Models.
@@ -60,7 +61,7 @@ class Venue(db.Model):
     shows = db.relationship('Show', backref='Venue')
     genres = db.relationship('Genre', secondary=venue_to_genre_assocations, backref=db.backref('venues', lazy=True))
     
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
+    # ✅ TODO: implement any missing fields, as a database migration using Flask-Migrate
 
 class Artist(db.Model):
     __tablename__ = 'Artist'
@@ -78,9 +79,9 @@ class Artist(db.Model):
     shows = db.relationship('Show', backref='Artist')
     genres = db.relationship('Genre', secondary=artist_to_genre_assocations, backref=db.backref('artists', lazy=True))
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
+    # ✅ TODO: implement any missing fields, as a database migration using Flask-Migrate
 
-# TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
+# ✅ TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
 
 class Show(db.Model):
     __tablename__ = 'Show'
