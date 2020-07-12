@@ -60,7 +60,7 @@ class Venue(db.Model):
     seeking_description = db.Column(db.String(500))
     image_link = db.Column(db.String(500))
     # Get num_upcoming_shows through query with Shows table
-    # Get past_whos through query with Shows table
+    # Get past_shows through query with Shows table
 
     shows = db.relationship('Show', backref='Venue')
     genres = db.relationship('Genre', secondary=venue_to_genre_assocations, backref=db.backref('venues', lazy=True))
