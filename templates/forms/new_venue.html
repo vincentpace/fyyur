@@ -2,7 +2,8 @@
 {% block title %}New Venue{% endblock %}
 {% block content %}
   <div class="form-wrapper">
-    <form method="post" class="form">
+    <form method="post" class="form" id="form">
+      <div id="error" class="hidden">Something went wrong!</div>
       <h3 class="form-heading">List a new venue <a href="{{ url_for('index') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
       <div class="form-group">
         <label for="name">Name</label>
@@ -39,4 +40,28 @@
       <input type="submit" value="Create Venue" class="btn btn-primary btn-lg btn-block">
     </form>
   </div>
+  <script>
+    document.getElementById('form').onsubmit = function(e) {
+        e.preventDefault(); // Prevent refresh on submit
+        fetch('/venues/create', {
+            method: 'POST',
+            body: JSON.stringify({
+                'name': document.getElementById('name').value
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(jsonResponse) {
+            console.log(jsonResponse);
+            window.location.replace("/venues");
+        })
+        .catch(function() {
+            document.getElementById('error').className = '';
+        });
+    }
+  </script>
 {% endblock %}
