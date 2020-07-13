@@ -281,6 +281,8 @@ def create_venue_submission():
         error = True
         db.session.rollback()
         print(sys.exc_info())
+        flash('An error occurred. Venue ' + request.form['name'] + ' could not be listed.')
+        # TODO: With this flash, I probably don't need the to-do app style error; consider removing after testing.
     finally:
         db.session.close()
     if not error:
