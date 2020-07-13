@@ -271,11 +271,12 @@ def create_venue_submission():
   # TODO: modify data to be the data object returned from db insertion
     error = False
     try:
-        name = request.get_json()['name']
-        venue = Venue(name=name)
-        db.session.add(venue)
-        db.session.commit()
-        flash('Venue ' + request.form['name'] + ' was successfully listed!')
+        if request.method == 'POST':
+          name = request.get_json()['name']
+          venue = Venue(name=name)
+          db.session.add(venue)
+          db.session.commit()
+          flash('Venue ' + request.form['name'] + ' was successfully listed!')
     except:
         error = True
         db.session.rollback()
